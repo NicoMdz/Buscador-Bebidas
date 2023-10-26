@@ -9,6 +9,7 @@ const BebidasProvider = ({children}) => {
     const [bebidaId,setBebidaId] = useState(null)
     const [receta,setReceta] = useState([])
     const [cargando, setCargando] = useState(false)
+    const [favoritos,setFavoritos] = useState([])
     //Consulta Bebidas de la API
     const consultarBebida = async  datos => {
         try {
@@ -46,6 +47,25 @@ const BebidasProvider = ({children}) => {
         }
         obtenerReceta()
     }, [bebidaId])
+     //Añadir bebida a Favoritos
+     const agregarFav = bebida => {
+        if(favoritos.some( bebidaState =>  bebidaState.idDrink === bebida.idDrink )) {
+            // Iterar para no añadir repetida
+            const favoritosActualizado = favoritos.map( bebidaState => {
+                if( bebidaState.idDrink === bebida.idDrink ) {
+                    bebidaState.strDrink = bebida.strDrink;
+                } 
+                return bebidaState;
+            });
+            // Se asigna al array
+            setFavoritos([...favoritosActualizado]);
+            // localStorage.setItem('carrito', JSON.stringify( carrito ));
+        } else {
+            // En caso de que el articulo no exista, es nuevo y se agrega
+            setFavoritos([...favoritos, bebida]);
+            // localStorage.setItem('carrito', JSON.stringify( carrito ));
+        }
+    }
     
 
   return (
@@ -58,7 +78,8 @@ const BebidasProvider = ({children}) => {
             handleBebidaIdClick,
             receta,
             setReceta,
-            cargando
+            cargando,
+            agregarFav
         }}
       >
         {children}

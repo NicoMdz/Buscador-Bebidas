@@ -23,7 +23,12 @@ const Formulario = () => {
         setAlerta("")
         consultarBebida(busqueda)
     }
+    const handleSubmitFavs = e => {
+        e.preventDefault()
+        consultarFavoritas()
+    }
   return (
+    <>
     <Form 
         onSubmit={handleSubmit}
     >
@@ -84,6 +89,17 @@ const Formulario = () => {
             </Col>
         </Row>
     </Form>
+    <Form>
+        <Button
+            variant="danger"
+            className="text-uppercase w-40 mt-1 "
+            type="submit"
+            onSubmit={handleSubmitFavs}
+        >
+            Ver Favoritos
+        </Button>
+    </Form>
+    </>
   )
 }
 

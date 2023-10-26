@@ -4,7 +4,7 @@ import useBebidas from "../hooks/useBebidas"
 const ModalBebida = () => {
 
     const {modal,handleModalClick,receta,setReceta,cargando} = useBebidas()
-    console.log(receta)
+    
 
     const mostrarIngredientes = () => {
         let ingredientes = []

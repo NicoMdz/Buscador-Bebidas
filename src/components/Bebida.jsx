@@ -3,11 +3,11 @@ import useBebidas from "../hooks/useBebidas"
 
 const Bebida = ({bebida}) => {
 
-    const { handleModalClick,handleBebidaIdClick} = useBebidas()
+    const { handleModalClick,handleBebidaIdClick,agregarFav} = useBebidas()
 
   return (
     <Col md={6} lg={3}>
-        <Card className="mb-4">
+        <Card className="mb-4 text-center ">
             <Card.Img 
                 variant="top"
                 src={bebida.strDrinkThumb}
@@ -15,7 +15,7 @@ const Bebida = ({bebida}) => {
             />
             <Card.Body>
                 <Card.Title>{bebida.strDrink}</Card.Title>
-                <Card.Text>Lorem Ipsum</Card.Text>
+                {/* <Card.Text>Lorem Ipsum</Card.Text> */}
 
                 <Button 
                     variant="danger"
@@ -26,6 +26,15 @@ const Bebida = ({bebida}) => {
                     }}
                 >
                     Ver Receta
+                </Button>
+                <Button
+                    variant="danger"
+                    className="mt-1"
+                    onClick={() => {
+                        agregarFav(bebida)
+                    }}
+                >
+                    ♡
                 </Button>
             </Card.Body>
         </Card>
