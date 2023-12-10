@@ -78,7 +78,7 @@ const Formulario = () => {
                     className="text-uppercase w-100"
                     type="submit"
                 >
-                    Buscar Bedidas
+                    Buscar Bebidas
                 </Button>
             
             </Col>

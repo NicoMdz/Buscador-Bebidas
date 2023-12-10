@@ -15,7 +15,7 @@ const Bebida = ({bebida}) => {
             />
             <Card.Body>
                 <Card.Title>{bebida.strDrink}</Card.Title>
-                <Card.Text>Lorem Ipsum</Card.Text>
+                <Card.Text></Card.Text>
 
                 <Button 
                     variant="danger"
