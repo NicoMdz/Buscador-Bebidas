@@ -11,7 +11,7 @@ const Formulario = () => {
     })
     const [alerta,setAlerta] = useState("")
     const { categorias } = useCategorias() 
-    const { consultarBebida } = useBebidas()
+    const { consultarBebida,consultarFavoritas,favoritos } = useBebidas()
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -25,7 +25,7 @@ const Formulario = () => {
     }
     const handleSubmitFavs = e => {
         e.preventDefault()
-        consultarFavoritas()
+        consultarFavoritas(favoritos)
     }
   return (
     <>
@@ -89,12 +89,13 @@ const Formulario = () => {
             </Col>
         </Row>
     </Form>
-    <Form>
+    <Form
+        onSubmit={handleSubmitFavs}
+    >
         <Button
             variant="danger"
             className="text-uppercase w-40 mt-1 "
             type="submit"
-            onSubmit={handleSubmitFavs}
         >
             Ver Favoritos
         </Button>

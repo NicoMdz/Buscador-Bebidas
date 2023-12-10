@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react"
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 
 const BebidasContext = createContext()
 const BebidasProvider = ({children}) => {
@@ -11,7 +11,7 @@ const BebidasProvider = ({children}) => {
     const [cargando, setCargando] = useState(false)
     const [favoritos,setFavoritos] = useState([])
     //Consulta Bebidas de la API
-    const consultarBebida = async  datos => {
+    const consultarBebida = async datos => {
         try {
             const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${datos.nombre}&c=${datos.categoria}`
 
@@ -47,6 +47,28 @@ const BebidasProvider = ({children}) => {
         }
         obtenerReceta()
     }, [bebidaId])
+    //Consultar Bebidas Favoritas
+    const consultarFavoritas = async () => {
+        try {
+          const nuevasBebidas = await Promise.all(
+            favoritos.map(async (fav) => {
+              try {
+                let url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${fav.idDrink}`;
+                let { data } = await axios(url);
+                return(data.drinks[0])
+              } catch (error) {
+                console.log(error);
+                return null; // O manejar el error de alguna otra manera
+              }
+            })
+          );
+       
+          // Filtra elementos nulos (errores) y actualiza el estado
+          setBebidas(nuevasBebidas.filter((bebida) => bebida !== null));
+        } catch (error) {
+          console.log(error);
+        }
+      };
      //Añadir bebida a Favoritos
      const agregarFav = bebida => {
         if(favoritos.some( bebidaState =>  bebidaState.idDrink === bebida.idDrink )) {
@@ -79,7 +101,8 @@ const BebidasProvider = ({children}) => {
             receta,
             setReceta,
             cargando,
-            agregarFav
+            agregarFav,
+            consultarFavoritas
         }}
       >
         {children}
